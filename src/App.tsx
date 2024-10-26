@@ -1,4 +1,5 @@
 import ButtonCreate from './components/ButtonCreate';
+import Checkbox from './components/Checkbox';
 import { Header } from './components/Header';
 import Input from './components/Input';
 
@@ -28,7 +29,7 @@ function App() {
           </h2>
         </div>
 
-        <div className="h-[286px] flex flex-col gap-4 justify-center items-center mt-6 rounded-lg border-t-2 border-gray-400">
+        <div className="h-[287px] flex flex-col gap-4 justify-center items-center mt-6 rounded-lg border-t-2 border-gray-400">
           <img src="Clipboard.svg" alt="Clipboard" />
           <div className="text-center">
             <h3 className="text-gray-300 font-bold">
@@ -38,6 +39,7 @@ function App() {
               Crie tarefas e organize seus itens a fazer
             </span>
           </div>
+          <Checkbox />
         </div>
       </div>
     </main>

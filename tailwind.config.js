@@ -6,6 +6,10 @@ export default {
   ],
   theme: {
     extend: {
+      backgroundImage: {
+        'checkmark': "url('/Vector.svg')",
+      },
+      
       colors:{
         "blue":"#4EA8DE",
         "blue-dark": "#1E6F9F",
@@ -31,6 +35,11 @@ export default {
         "line":"1.4",
       }
     },
+    variants: {
+    extend: {
+      backgroundImage: ['checked'],
+    },
+  },
   },
   plugins: [],
 }
