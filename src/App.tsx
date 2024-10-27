@@ -1,4 +1,5 @@
 import ButtonCreate from './components/ButtonCreate';
+import ButtonTrash from './components/ButtonTrash';
 import Checkbox from './components/Checkbox';
 import { Header } from './components/Header';
 import Input from './components/Input';
@@ -40,6 +41,7 @@ function App() {
             </span>
           </div>
           <Checkbox />
+          <ButtonTrash />
         </div>
       </div>
     </main>
