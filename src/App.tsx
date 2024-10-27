@@ -1,8 +1,7 @@
 import ButtonCreate from './components/ButtonCreate';
-import ButtonTrash from './components/ButtonTrash';
-import Checkbox from './components/Checkbox';
 import { Header } from './components/Header';
 import Input from './components/Input';
+import Task from './components/Task';
 
 function App() {
   return (
@@ -30,6 +29,8 @@ function App() {
           </h2>
         </div>
 
+        <Task text="Integer urna interdum massa libero auctor neque turpis turpis semper. Duis vel sed fames integer." />
+
         <div className="h-[287px] flex flex-col gap-4 justify-center items-center mt-6 rounded-lg border-t-2 border-gray-400">
           <img src="Clipboard.svg" alt="Clipboard" />
           <div className="text-center">
@@ -40,8 +41,6 @@ function App() {
               Crie tarefas e organize seus itens a fazer
             </span>
           </div>
-          <Checkbox />
-          <ButtonTrash />
         </div>
       </div>
     </main>
