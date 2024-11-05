@@ -1,3 +1,4 @@
+// App.tsx
 import { useState, ChangeEvent } from 'react';
 import ButtonCreate from './components/ButtonCreate';
 import { Header } from './components/Header';
@@ -24,6 +25,14 @@ function App() {
       setTaskCreated(taskCreated + 1);
       setInputValue('');
     }
+  }
+
+  function incrementTaskCompleted() {
+    setTaskCompleted(taskCompleted + 1);
+  }
+
+  function decrementTaskCompleted() {
+    setTaskCompleted(taskCompleted - 1);
   }
 
   return (
@@ -64,7 +73,11 @@ function App() {
         {isTask ? (
           <div className="flex flex-col gap-3 mt-6 last:pb-3">
             {tasks.map((task) => (
-              <Task text={task} />
+              <Task
+                text={task}
+                onComplete={incrementTaskCompleted}
+                onUncomplete={decrementTaskCompleted}
+              />
             ))}
           </div>
         ) : (
