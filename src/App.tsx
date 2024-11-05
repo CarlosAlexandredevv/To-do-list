@@ -53,6 +53,9 @@ function App() {
     const updatedTasks = tasks.filter((task) => task.id !== taskId);
     setTasks(updatedTasks);
     setTaskCreated(taskCreated - 1);
+    if (updatedTasks.length === 0) {
+      setIsTask(false);
+    }
   }
 
   function handleCompleteTask(taskId: string) {
