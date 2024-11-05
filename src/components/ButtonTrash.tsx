@@ -1,6 +1,7 @@
-export default function ButtonTrash() {
+export default function ButtonTrash({ ...props }) {
   return (
     <svg
+      {...props}
       width="25"
       height="24"
       viewBox="0 0 25 24"

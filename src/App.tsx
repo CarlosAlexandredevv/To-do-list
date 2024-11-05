@@ -1,4 +1,3 @@
-// App.tsx
 import { useState, ChangeEvent } from 'react';
 import ButtonCreate from './components/ButtonCreate';
 import { Header } from './components/Header';
@@ -33,6 +32,16 @@ function App() {
 
   function decrementTaskCompleted() {
     setTaskCompleted(taskCompleted - 1);
+  }
+
+  function handleDeleteTask(taskIndex: number) {
+    const updatedTasks = tasks.filter((_, index) => index !== taskIndex);
+    setTasks(updatedTasks);
+    setTaskCreated(taskCreated - 1);
+
+    if (taskCompleted > 0 && tasks[taskIndex]) {
+      decrementTaskCompleted();
+    }
   }
 
   return (
@@ -72,8 +81,10 @@ function App() {
 
         {isTask ? (
           <div className="flex flex-col gap-3 mt-6 last:pb-3">
-            {tasks.map((task) => (
+            {tasks.map((task, index) => (
               <Task
+                key={index}
+                onDelete={() => handleDeleteTask(index)}
                 text={task}
                 onComplete={incrementTaskCompleted}
                 onUncomplete={decrementTaskCompleted}
