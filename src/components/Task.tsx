@@ -1,4 +1,3 @@
-// Task.tsx
 import { useState } from 'react';
 import ButtonTrash from './ButtonTrash';
 import Checkbox from './Checkbox';
