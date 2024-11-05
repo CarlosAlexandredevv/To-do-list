@@ -1,4 +1,4 @@
-# Desafio 01 Formação React.Js To-Do List
+# Desafio 01 Formação React.Js: To-Do List
 
 Fala, Dev! 😎
 
