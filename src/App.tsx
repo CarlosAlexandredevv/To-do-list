@@ -4,9 +4,15 @@ import { Header } from './components/Header';
 import Input from './components/Input';
 import Task from './components/Task';
 
+type TaskType = {
+  id: string;
+  text: string;
+  isChecked: boolean;
+};
+
 function App() {
   const [isTask, setIsTask] = useState(false);
-  const [tasks, setTasks] = useState<string[]>([]);
+  const [tasks, setTasks] = useState<TaskType[]>([]);
   const [inputValue, setInputValue] = useState('');
   const [taskCreated, setTaskCreated] = useState(0);
   const [taskCompleted, setTaskCompleted] = useState(0);
@@ -20,7 +26,12 @@ function App() {
       alert('Digite uma tarefa para adicionar');
     } else {
       setIsTask(true);
-      setTasks([...tasks, inputValue]);
+      const newTask = {
+        id: `${Date.now()}-${Math.random()}`,
+        text: inputValue,
+        isChecked: false,
+      };
+      setTasks([...tasks, newTask]);
       setTaskCreated(taskCreated + 1);
       setInputValue('');
     }
@@ -34,14 +45,32 @@ function App() {
     setTaskCompleted(taskCompleted - 1);
   }
 
-  function handleDeleteTask(taskIndex: number) {
-    const updatedTasks = tasks.filter((_, index) => index !== taskIndex);
-    setTasks(updatedTasks);
-    setTaskCreated(taskCreated - 1);
-
-    if (taskCompleted > 0 && tasks[taskIndex]) {
+  function handleDeleteTask(taskId: string) {
+    const taskToDelete = tasks.find((task) => task.id === taskId);
+    if (taskToDelete?.isChecked) {
       decrementTaskCompleted();
     }
+    const updatedTasks = tasks.filter((task) => task.id !== taskId);
+    setTasks(updatedTasks);
+    setTaskCreated(taskCreated - 1);
+  }
+
+  function handleCompleteTask(taskId: string) {
+    setTasks(
+      tasks.map((task) =>
+        task.id === taskId ? { ...task, isChecked: true } : task,
+      ),
+    );
+    incrementTaskCompleted();
+  }
+
+  function handleUncompleteTask(taskId: string) {
+    setTasks(
+      tasks.map((task) =>
+        task.id === taskId ? { ...task, isChecked: false } : task,
+      ),
+    );
+    decrementTaskCompleted();
   }
 
   return (
@@ -81,13 +110,13 @@ function App() {
 
         {isTask ? (
           <div className="flex flex-col gap-3 mt-6 last:pb-3">
-            {tasks.map((task, index) => (
+            {tasks.map((task) => (
               <Task
-                key={index}
-                onDelete={() => handleDeleteTask(index)}
-                text={task}
-                onComplete={incrementTaskCompleted}
-                onUncomplete={decrementTaskCompleted}
+                key={task.id}
+                onDelete={() => handleDeleteTask(task.id)}
+                text={task.text}
+                onComplete={() => handleCompleteTask(task.id)}
+                onUncomplete={() => handleUncompleteTask(task.id)}
               />
             ))}
           </div>
