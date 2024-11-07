@@ -1,4 +1,4 @@
-import { useState, ChangeEvent } from 'react';
+import { useState, useEffect, ChangeEvent } from 'react';
 import ButtonCreate from './components/ButtonCreate';
 import { Header } from './components/Header';
 import Input from './components/Input';
@@ -12,10 +12,22 @@ type TaskType = {
 
 function App() {
   const [isTask, setIsTask] = useState(false);
-  const [tasks, setTasks] = useState<TaskType[]>([]);
+  const [tasks, setTasks] = useState<TaskType[]>(() => {
+    const storedTasks = localStorage.getItem('tasks');
+    return storedTasks ? JSON.parse(storedTasks) : [];
+  });
   const [inputValue, setInputValue] = useState('');
-  const [taskCreated, setTaskCreated] = useState(0);
-  const [taskCompleted, setTaskCompleted] = useState(0);
+  const [taskCreated, setTaskCreated] = useState(tasks.length);
+  const [taskCompleted, setTaskCompleted] = useState(
+    tasks.filter((task) => task.isChecked).length,
+  );
+
+  useEffect(() => {
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+    setTaskCreated(tasks.length);
+    setTaskCompleted(tasks.filter((task) => task.isChecked).length);
+    setIsTask(tasks.length > 0);
+  }, [tasks]);
 
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
     setInputValue(event.target.value);
@@ -32,7 +44,6 @@ function App() {
         isChecked: false,
       };
       setTasks([...tasks, newTask]);
-      setTaskCreated(taskCreated + 1);
       setInputValue('');
     }
   }
@@ -52,10 +63,6 @@ function App() {
     }
     const updatedTasks = tasks.filter((task) => task.id !== taskId);
     setTasks(updatedTasks);
-    setTaskCreated(taskCreated - 1);
-    if (updatedTasks.length === 0) {
-      setIsTask(false);
-    }
   }
 
   function handleCompleteTask(taskId: string) {
@@ -118,6 +125,7 @@ function App() {
                 key={task.id}
                 onDelete={() => handleDeleteTask(task.id)}
                 text={task.text}
+                isChecked={task.isChecked}
                 onComplete={() => handleCompleteTask(task.id)}
                 onUncomplete={() => handleUncompleteTask(task.id)}
               />
