@@ -11,7 +11,6 @@ type TaskType = {
 };
 
 function App() {
-  const [isTask, setIsTask] = useState(false);
   const [tasks, setTasks] = useState<TaskType[]>([]);
   const [inputValue, setInputValue] = useState('');
   const [taskCreated, setTaskCreated] = useState(0);
@@ -25,7 +24,6 @@ function App() {
     if (inputValue.trim().length === 0) {
       alert('Digite uma tarefa para adicionar');
     } else {
-      setIsTask(true);
       const newTask = {
         id: `${Date.now()}-${Math.random()}`,
         text: inputValue,
@@ -108,7 +106,7 @@ function App() {
           </h2>
         </div>
 
-        {isTask ? (
+        {tasks.length > 0 ? (
           <div className="flex flex-col gap-3 mt-6 last:pb-3">
             {tasks.map((task) => (
               <Task
